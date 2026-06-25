@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>咪咕体育直播 · 持续关注的赛事入口</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #fce4c8 0%, #fbd5a5 60%, #fbc78d 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2.5rem 1rem;
+            line-height: 1.6;
+            color: #2a2218;
+        }
+
+        .page-wrap {
+            max-width: 1120px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 2.2rem;
+        }
+
+        /* 共用卡片样式 */
+        .card {
+            background: rgba(255, 250, 240, 0.92);
+            backdrop-filter: blur(2px);
+            border-radius: 36px 18px 36px 18px;
+            padding: 2.8rem 2.5rem;
+            box-shadow: 0 12px 28px -8px rgba(140, 80, 20, 0.18), 0 4px 8px rgba(255, 235, 200, 0.3);
+            border: 1px solid rgba(255, 215, 160, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 32px -10px rgba(120, 65, 10, 0.22);
+        }
+
+        /* Hero 区域 */
+        .hero {
+            text-align: center;
+            background: linear-gradient(135deg, #fff5e6 0%, #ffedd5 90%);
+            border-radius: 40px 20px 40px 20px;
+            padding: 4rem 2.2rem 3.2rem;
+            border-bottom: 4px solid #f3b373;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 6vw, 3.6rem);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            background: linear-gradient(to right, #8b5a2b, #b47a44);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.8rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 680px;
+            margin: 1rem auto 1.6rem;
+            color: #4d3822;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: #e8c396;
+            color: #2e1f0f;
+            padding: 0.5rem 1.4rem;
+            border-radius: 80px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: inset 0 -1px 0 rgba(0,0,0,0.05);
+        }
+
+        /* 优势网格 */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .benefit-item {
+            background: rgba(255, 248, 235, 0.8);
+            border-radius: 28px 14px 28px 14px;
+            padding: 2rem 1.5rem;
+            border-left: 4px solid #e6b27a;
+            transition: all 0.15s;
+        }
+
+        .benefit-item h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #6b431e;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .benefit-item p {
+            color: #3f3021;
+            font-size: 0.98rem;
+        }
+
+        /* 说明区 (双列) */
+        .two-col {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .two-col > .col {
+            flex: 1 1 280px;
+            background: rgba(255, 245, 230, 0.7);
+            border-radius: 28px 14px 28px 14px;
+            padding: 2rem 1.8rem;
+            border: 1px solid #f7dbb6;
+        }
+
+        .two-col h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #6f4a22;
+            border-bottom: 2px dashed #e3b889;
+            padding-bottom: 0.6rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .two-col ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .two-col li {
+            padding: 0.5rem 0 0.5rem 1.8rem;
+            position: relative;
+            color: #3b2f20;
+        }
+
+        .two-col li::before {
+            content: "⚡";
+            position: absolute;
+            left: 0;
+            color: #d4954e;
+        }
+
+        /* FAQ 摘要 */
+        .faq-summary {
+            background: #fff7eb;
+            border-radius: 32px 16px 32px 16px;
+            padding: 2.2rem 2rem;
+        }
+
+        .faq-summary h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #593f23;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .faq-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid #edd9be;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-q {
+            font-weight: 600;
+            color: #5b3d1b;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .faq-a {
+            color: #3f3222;
+            font-size: 0.96rem;
+        }
+
+        /* 底部 */
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 1.2rem 2rem;
+            padding: 1.4rem 0.8rem;
+            background: rgba(255, 235, 210, 0.5);
+            border-radius: 60px 20px 60px 20px;
+            text-align: center;
+            font-size: 0.98rem;
+        }
+
+        .footer-links a, .inline-link {
+            color: #6f4a22;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            background: rgba(255, 215, 160, 0.2);
+            border: 1px solid #e5bb8a;
+            transition: all 0.15s;
+            display: inline-block;
+        }
+
+        .footer-links a:hover, .inline-link:hover {
+            background: #e5bb8a;
+            color: #2e1f0f;
+            border-color: #bf8f56;
+            box-shadow: 0 2px 6px rgba(160, 100, 30, 0.2);
+        }
+
+        .inline-link {
+            padding: 0.2rem 0.9rem;
+            background: #edd6b6;
+            border: none;
+            border-radius: 30px;
+        }
+
+        .note {
+            color: #4e3c2b;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            opacity: 0.7;
+        }
+
+        /* 响应式微调 */
+        @media (max-width: 600px) {
+            .card {
+                padding: 1.8rem 1.2rem;
+            }
+            .hero {
+                padding: 2.5rem 1.2rem;
+            }
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrap">
+
+    <!-- hero 区 -->
+    <section class="hero card">
+        <span class="hero-tag">再次遇见 · 持续关注</span>
+        <h1>赛事线索，常在收藏夹</h1>
+        <p>对于习惯反复回看、追踪联赛动态的观众，<strong>咪咕体育直播</strong> 提供了稳定的赛事聚合与回放路径。不止是即时比分，更是深度关注者的信息锚点。</p>
+        <div style="margin-top: 0.6rem;">
+            <a href="https://webs-migu.com" class="inline-link" style="font-size:1.2rem; padding:0.45rem 1.8rem;">咪咕体育直播</a>
+        </div>
+    </section>
+
+    <!-- 优势区：为什么值得收藏和回来 -->
+    <section class="grid-3">
+        <div class="benefit-item">
+            <h3>📌 持久可寻</h3>
+            <p>赛事页面结构相对稳定，便于加入浏览器收藏夹。多次访问时无需重新搜索，直接定位你关注的联赛与场次。</p>
+        </div>
+        <div class="benefit-item">
+            <h3>⏳ 回溯脉络</h3>
+            <p>不少焦点赛事提供文字直播与分段回顾，适合赛后复盘、数据对照，也适合错过开赛的观众快速跟进关键节点。</p>
+        </div>
+        <div class="benefit-item">
+            <h3>📡 多端一致</h3>
+            <p>无论使用桌面浏览器还是移动端，<a href="https://webs-migu.com" class="inline-link" style="padding:0.1rem 0.7rem; background:#eccba6;">咪咕体育直播</a> 的路径与界面逻辑保持一致，收藏后跨设备同步体验顺畅。</p>
+        </div>
+    </section>
+
+    <!-- 说明区：从收藏到关注的信息习惯 -->
+    <section class="two-col card" style="padding:2rem 2rem;">
+        <div class="col">
+            <h2>再度回访的价值</h2>
+            <ul>
+                <li>同一赛事页面聚合多轮信息，不必反复跳转</li>
+                <li>历史赛程与前瞻并置，适合持续性关注者</li>
+                <li>页面保留文字直播记录，可回溯关键事件</li>
+                <li>通过收藏夹直达，减少信息噪音</li>
+            </ul>
+        </div>
+        <div class="col">
+            <h2>持续关注的视角</h2>
+            <ul>
+                <li>关注特定联赛或队伍，页面更新后依然可沿路径访问</li>
+                <li>结合文字直播与统计，辅助理解比赛走势</li>
+                <li>适合不希望被推送打扰、主动获取赛况的用户</li>
+                <li>将 <a href="https://webs-migu.com" class="inline-link">咪咕体育直播</a> 固定为入口，形成个人观赛索引</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- FAQ 摘要 -->
+    <section class="faq-summary card">
+        <h2><span style="font-size:1.6rem;">❓</span> 常见关注点摘要</h2>
+        <div class="faq-item">
+            <span class="faq-q">· 如何快速回到上次看的赛事？</span>
+            <div class="faq-a">建议将 <a href="https://webs-migu.com" class="inline-link" style="padding:0.1rem 0.6rem;">咪咕体育直播</a> 添加至浏览器收藏夹或书签栏。再次访问时直接点击即可进入聚合页，再按时间或联赛筛选。</div>
+        </div>
+        <div class="faq-item">
+            <span class="faq-q">· 页面内容会频繁变动吗？</span>
+            <div class="faq-a">核心导航与直播列表结构相对固定，但具体比赛卡片会随赛程更新。收藏后长期可用，适合作为固定入口。</div>
+        </div>
+        <div class="faq-item">
+            <span class="faq-q">· 是否支持赛程回顾？</span>
+            <div class="faq-a">部分已结束赛事仍保留文字直播与关键事件记录，可通过日期或分类查找。适合赛后分析或补看错过的场次。</div>
+        </div>
+        <div style="margin-top:0.8rem; font-style: italic; color:#4f3b28;">
+            <span>更多细节可在访问时通过页面导航进一步了解。</span>
+        </div>
+    </section>
+
+    <!-- 底部链接与提示 -->
+    <footer class="footer-links">
+        <span>持续收藏 · 准时回看</span>
+        <a href="https://webs-migu.com">咪咕体育直播</a>
+        <span class="note">页面信息仅作参考，以实际展示为准</span>
+    </footer>
+
+</div>
+</body>
+</html>
